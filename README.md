@@ -12,3 +12,5 @@ mvn clean install
 java -jar ${maven_repo}\com\happen23\agv\agv-hik_camera\1.0-SNAPSHOT\agv-hik_camera-1.0-SNAPSHOT.jar;${maven_repo}\net\java\dev\jna\jna\5.5.0\jna-5.5.0.jar com.happen23.agv.hik_camera.HikJnaCamera
 ```
 
+如果觉得有用，请考虑捐赠
+![支付宝二维码](https://wx2.sbimg.cn/2020/05/12/caa7b59b61cc5b6ee9e91e6f57fe9553.md.png)
