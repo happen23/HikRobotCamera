@@ -8,6 +8,7 @@ import com.sun.jna.ptr.PointerByReference;
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class HikJnaCamera implements ICamera {
@@ -118,15 +119,19 @@ public class HikJnaCamera implements ICamera {
         try {
             hikJnaCamera = new HikJnaCamera("gbk", format);
             hikJnaCamera.init();
-            Thread.sleep(10000);  // waiting auto exposure stabilized
-            byte[] image = hikJnaCamera.takePhoto("c1");
-            if (image != null){
-                File file = new File("a."+format);
-                FileOutputStream out = new FileOutputStream(file);
-                out.write(image);
+            // 等待用户输入相机名字，顺便等待曝光稳定
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                String cameraName = scanner.next();
+                byte[] image = hikJnaCamera.takePhoto(cameraName);
+                if (image != null){
+                    File file = new File(cameraName+"."+format);
+                    FileOutputStream out = new FileOutputStream(file);
+                    out.write(image);
+                }else{
+                    break;
+                }
             }
-        }catch (InterruptedException e) {
-            e.printStackTrace();
         }catch (IOException e) {
             e.printStackTrace();
         }finally{
