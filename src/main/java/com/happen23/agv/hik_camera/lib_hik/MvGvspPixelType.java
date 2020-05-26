@@ -21,7 +21,7 @@ public class MvGvspPixelType implements NativeMapped {
 
     @Override
     public MvGvspPixelType fromNative(Object o, FromNativeContext fromNativeContext) {
-        if (os_arch.equals("arm")) {
+        if (os_name.equals("Linux")) {
             return new MvGvspPixelType(Long.valueOf((long) o));
         } else {
             return new MvGvspPixelType(Integer.toUnsignedLong((int) o));
@@ -30,7 +30,7 @@ public class MvGvspPixelType implements NativeMapped {
 
     @Override
     public Object toNative() {
-        if (os_arch.equals("arm")) {
+        if (os_name.equals("Linux")) {
             return this.value;
         } else {
             return this.value.intValue();
@@ -39,7 +39,7 @@ public class MvGvspPixelType implements NativeMapped {
 
     @Override
     public Class<?> nativeType() {
-        if (os_arch.equals("arm")) {
+        if (os_name.equals("Linux")) {
             return Long.class;
         } else {
             return Integer.class;
