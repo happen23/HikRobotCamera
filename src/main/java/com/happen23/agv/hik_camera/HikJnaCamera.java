@@ -188,6 +188,19 @@ public class HikJnaCamera implements ICamera {
             }
             camera.mState = State.OPENED;
 
+            // 探测网络最佳包大小并尝试设置之
+            int packetSize = HikLibrary.INSTANCE.MV_CC_GetOptimalPacketSize(handle.getValue());
+            if (packetSize > 0)
+            {
+                int res_pkt_size = HikLibrary.INSTANCE.MV_CC_SetIntValue(handle.getValue(), "GevSCPSPacketSize", packetSize);
+                if(res_pkt_size != HikLibrary.MV_OK)
+                {
+                    System.out.printf("camera %s set pkt size=%d fail, err_code=0x%08x\n", camera.mName, packetSize, res_pkt_size);
+                }
+            } else {
+                System.out.printf("camera %s get pkt size=%d, but it must > 0\n", camera.mName, packetSize);
+            }
+
             MVCC_INTVALUE intParam = new MVCC_INTVALUE();
             int res_get_param = HikLibrary.INSTANCE.MV_CC_GetIntValue(handle.getValue(),
                     "PayloadSize", intParam);
